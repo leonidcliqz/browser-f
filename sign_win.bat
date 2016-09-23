@@ -18,7 +18,8 @@ if exist ./pkg_%lang% rmdir /q /s "pkg_%lang%"
 if not exist ./pkg_%lang% (goto :error)
 
 echo %CLZ_SIGNTOOL_PATH%
-
+echo %CLZ_CERTIFICATE_PATH% > cert_path
+set /p TMP_CERT=<cert_path
 cd pkg_%lang%
 for /R %%f in (
   *.exe *.dll
@@ -27,8 +28,8 @@ for /R %%f in (
   echo Check and sign %%f
   "%CLZ_SIGNTOOL_PATH%" verify /pa %%f
   if ERRORLEVEL 1 (
-    "%CLZ_SIGNTOOL_PATH%" sign /t %timestamp_server_sha1% /f %CLZ_CERTIFICATE_PATH% /p %CLZ_CERTIFICATE_PWD% %%f
-    "%CLZ_SIGNTOOL_PATH%" sign /fd sha256 /tr %timestamp_server_sha256% /td sha256 /f %CLZ_CERTIFICATE_PATH% /p %CLZ_CERTIFICATE_PWD% /as %%f
+    "%CLZ_SIGNTOOL_PATH%" sign /t %timestamp_server_sha1% /f %TMP_CERT% /p %CLZ_CERTIFICATE_PWD% %%f
+    "%CLZ_SIGNTOOL_PATH%" sign /fd sha256 /tr %timestamp_server_sha256% /td sha256 /f %TMP_CERT% /p %CLZ_CERTIFICATE_PWD% /as %%f
     "%CLZ_SIGNTOOL_PATH%" verify /pa %%f
   )
   if ERRORLEVEL 1 (goto :error)
@@ -42,8 +43,8 @@ del installer.7z
 cd ..
 copy /b browser\installer\windows\instgen\7zSD.sfx + browser\installer\windows\instgen\app.tag + pkg_%lang%\installer.7z dist\install\sea\CLIQZ-%ff_exe%.win32.installer.exe
 
-"%CLZ_SIGNTOOL_PATH%" sign /t %timestamp_server_sha1% /f %CLZ_CERTIFICATE_PATH% /p %CLZ_CERTIFICATE_PWD% dist\install\sea\CLIQZ-%ff_exe%.win32.installer.exe
-"%CLZ_SIGNTOOL_PATH%" sign /fd sha256 /tr %timestamp_server_sha256% /td sha256 /f %CLZ_CERTIFICATE_PATH% /p %CLZ_CERTIFICATE_PWD% /as dist\install\sea\CLIQZ-%ff_exe%.win32.installer.exe
+"%CLZ_SIGNTOOL_PATH%" sign /t %timestamp_server_sha1% /f %TMP_CERT% /p %CLZ_CERTIFICATE_PWD% dist\install\sea\CLIQZ-%ff_exe%.win32.installer.exe
+"%CLZ_SIGNTOOL_PATH%" sign /fd sha256 /tr %timestamp_server_sha256% /td sha256 /f %TMP_CERT% /p %CLZ_CERTIFICATE_PWD% /as dist\install\sea\CLIQZ-%ff_exe%.win32.installer.exe
 "%CLZ_SIGNTOOL_PATH%" verify /pa dist\install\sea\CLIQZ-%ff_exe%.win32.installer.exe
 if ERRORLEVEL 1 (goto :error)
 
