@@ -20,6 +20,7 @@ if not exist ./pkg_%lang% (goto :error)
 echo %CLZ_SIGNTOOL_PATH%
 echo %CLZ_CERTIFICATE_PATH% > cert_path
 set /p TMP_CERT=<cert_path
+echo %TMP_CERT% > cert_path_tmp
 cd pkg_%lang%
 for /R %%f in (
   *.exe *.dll
