@@ -52,6 +52,7 @@ withCredentials([
           set CQZ_WORKSPACE=%cd%
           build_win.bat
         '''
+        input "ready?"
       }
     }
 
