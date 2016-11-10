@@ -51,6 +51,21 @@ else
   export L10NBASEDIR=../l10n  # --with-l10n-base=...
 fi
 
+# process css for use theme in browser, not from extension
+echo '***** Copy css from extension *****'
+CLIQZ_EXT_URL='http://cdn2.cliqz.com/update/browser_beta/latest.xpi'
+if [ $CQZ_BUILD_ID ]; then
+  CLIQZ_EXT_URL='http://repository.cliqz.com/dist/'$CQZ_RELEASE_CHANNEL'/'$CQZ_VERSION'/'$CQZ_BUILD_ID'/cliqz@cliqz.com.xpi'
+fi
+wget -O cliqz@cliqz.com.xpi $CLIQZ_EXT_URL
+if [ ! -d "browser/themes/linux/cliqz" ]; then mkdir browser/themes/linux/cliqz; fi
+if [ ! -d "browser/themes/osx/cliqz" ]; then mkdir browser/themes/osx/cliqz; fi
+if [ ! -d "browser/themes/windows/cliqz" ]; then mkdir browser/themes/windows/cliqz; fi
+unzip -p cliqz@cliqz.com.xpi chrome/content/theme/styles/theme-linux.css > browser/themes/linux/cliqz/theme.css
+unzip -p cliqz@cliqz.com.xpi chrome/content/theme/styles/theme-mac.css > browser/themes/osx/cliqz/theme.css
+unzip -p cliqz@cliqz.com.xpi chrome/content/theme/styles/theme-win.css > browser/themes/windows/cliqz/theme.css
+rm cliqz@cliqz.com.xpi
+
 echo '***** Building *****'
 ./mach build
 
