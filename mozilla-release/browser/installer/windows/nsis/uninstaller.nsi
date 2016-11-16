@@ -171,7 +171,7 @@ ChangeUI IDD_VERIFY "${NSISDIR}\Contrib\UIs\default.exe"
 # Helper Functions
 
 ; This function is used to uninstall the maintenance service if the
-; application currently being uninstalled is the last application to use the 
+; application currently being uninstalled is the last application to use the
 ; maintenance service.
 Function un.UninstallServiceIfNotUsed
   ; $0 will store if a subkey exists
@@ -278,30 +278,8 @@ Section "Uninstall"
     ${un.SetAppLSPCategories}
   ${EndIf}
 
-<<<<<<< HEAD
-  ${If} ${AtLeastWin8}
-    ${RemoveDEHRegistration} ${DELEGATE_EXECUTE_HANDLER_ID} \
-                             $AppUserModelID \
-                             "CliqzURL" \
-                             "CliqzHTML"
-  ${EndIf}
-
   ${un.RegCleanAppHandler} "CliqzURL"
   ${un.RegCleanAppHandler} "CliqzHTML"
-||||||| merged common ancestors
-  ${If} ${AtLeastWin8}
-    ${RemoveDEHRegistration} ${DELEGATE_EXECUTE_HANDLER_ID} \
-                             $AppUserModelID \
-                             "FirefoxURL" \
-                             "FirefoxHTML"
-  ${EndIf}
-
-  ${un.RegCleanAppHandler} "FirefoxURL"
-  ${un.RegCleanAppHandler} "FirefoxHTML"
-=======
-  ${un.RegCleanAppHandler} "FirefoxURL"
-  ${un.RegCleanAppHandler} "FirefoxHTML"
->>>>>>> origin/upstream-releases
   ${un.RegCleanProtocolHandler} "ftp"
   ${un.RegCleanProtocolHandler} "http"
   ${un.RegCleanProtocolHandler} "https"

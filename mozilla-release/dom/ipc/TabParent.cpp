@@ -2822,30 +2822,13 @@ void TabParent::CreateLoadContext() {
   if (mLoadContext) {
     return;
   } else {
-<<<<<<< HEAD
-    mLoadContext = new LoadContext(
-        GetOwnerElement(),
-        true /* aIsContent */,
-        mChromeFlags & nsIWebBrowserChrome::CHROME_PRIVATE_WINDOW,
-        mChromeFlags & nsIWebBrowserChrome::CHROME_REMOTE_WINDOW,
-        OriginAttributesRef());
-||||||| merged common ancestors
-    loadContext = new LoadContext(GetOwnerElement(),
-                                  true /* aIsContent */,
-                                  mChromeFlags & nsIWebBrowserChrome::CHROME_PRIVATE_WINDOW,
-                                  mChromeFlags & nsIWebBrowserChrome::CHROME_REMOTE_WINDOW,
-                                  OriginAttributesRef());
-    mLoadContext = loadContext;
-=======
     bool isPrivate = mChromeFlags & nsIWebBrowserChrome::CHROME_PRIVATE_WINDOW;
     SetPrivateBrowsingAttributes(isPrivate);
-    loadContext = new LoadContext(GetOwnerElement(),
-                                  true /* aIsContent */,
-                                  isPrivate,
-                                  mChromeFlags & nsIWebBrowserChrome::CHROME_REMOTE_WINDOW,
-                                  OriginAttributesRef());
-    mLoadContext = loadContext;
->>>>>>> origin/upstream-releases
+    mLoadContext = new LoadContext(GetOwnerElement(),
+                                   true /* aIsContent */,
+                                   isPrivate,
+                                   mChromeFlags & nsIWebBrowserChrome::CHROME_REMOTE_WINDOW,
+                                   OriginAttributesRef());
   }
 }
 

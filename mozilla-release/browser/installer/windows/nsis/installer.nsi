@@ -432,29 +432,13 @@ Section "-Application" APP_IDX
     ${Else}
       WriteRegDWORD HKCU "$0" "IconsVisible" 0
     ${EndIf}
-<<<<<<< HEAD
-  ${If} ${AtLeastWin8}
-    ${RemoveDEHRegistration} ${DELEGATE_EXECUTE_HANDLER_ID} \
-                             $AppUserModelID \
-                             "CliqzURL" \
-                             "CliqzHTML"
-  ${EndIf}
-||||||| merged common ancestors
-  ${If} ${AtLeastWin8}
-    ${RemoveDEHRegistration} ${DELEGATE_EXECUTE_HANDLER_ID} \
-                             $AppUserModelID \
-                             "FirefoxURL" \
-                             "FirefoxHTML"
-  ${EndIf}
-=======
->>>>>>> origin/upstream-releases
   ${EndIf}
 
 !ifdef MOZ_MAINTENANCE_SERVICE
-  ; If the maintenance service page was displayed then a value was already 
-  ; explicitly selected for installing the maintenance service and 
+  ; If the maintenance service page was displayed then a value was already
+  ; explicitly selected for installing the maintenance service and
   ; and so InstallMaintenanceService will already be 0 or 1.
-  ; If the maintenance service page was not displayed then 
+  ; If the maintenance service page was not displayed then
   ; InstallMaintenanceService will be equal to "".
   ${If} $InstallMaintenanceService == ""
     Call IsUserAdmin
@@ -478,7 +462,7 @@ Section "-Application" APP_IDX
 
   ${If} $InstallMaintenanceService == "1"
     ; The user wants to install the maintenance service, so execute
-    ; the pre-packaged maintenance service installer. 
+    ; the pre-packaged maintenance service installer.
     ; This option can only be turned on if the user is an admin so there
     ; is no need to use ExecShell w/ verb runas to enforce elevated.
     nsExec::Exec "$\"$INSTDIR\maintenanceservice_installer.exe$\""
